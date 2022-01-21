@@ -1,0 +1,31 @@
+<div class="container" style="margin-top: 40px;">
+  <form name="update_form" action="$(linkto(:admin_model_update; model = model_name(model), id = object.id))" method="POST">
+    <% for_each(model_update_fields(model)) do field %>
+      <div class="row mb-2">
+	<label for="$(field)" class="col-sm-1 col-form-label">$(model_field_names(model, field))</label>
+	<div class="col-sm-11">
+	  <% if field == :id %>
+	    <input class="form-control" type="text" id="id" name="id" value="$(object.id)" readonly>
+          <% elseif field in model_parent_models(model) %>
+	    <select class="form-select" id="$(field)" name="$(field)" autocomplete="off">
+	      <% for_each(all(get_model(field))) do choice %>
+	        <% if isrelated(object, choice) %>
+	          <option value="$(choice.id)" selected="selected">$(choice.name)</option>
+	        <% else %>
+	          <option value="$(choice.id)">$(choice.name)</option>
+	        <% end %>
+	      <% end %>
+	    </select>
+	  <% else %>
+            <input class="form-control" type="text" id="$(field)" name="$(field)" value="$(render_model_field(object,field))">
+	  <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="mb-2">
+      <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+  </form>
+</div>
+
+

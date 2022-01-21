@@ -1,0 +1,26 @@
+<div class="container" style="margin-top: 40px;">
+  <form action="$(linkto(:admin_model_create; model = model_symbol(model)))" method="POST">
+    <% for_each(model_create_fields(model)) do field %>
+      <div class="row mb-2">
+	<label for="$(field)" class="col-sm-1 col-form-label">$(model_field_names(model, field))</label>
+	<div class="col-sm-11">
+          <% if field in model_parent_models(model) %>
+	    <select class="form-select" id="$(field)" name="$(field)">
+	      <option>--</option>
+	      <% for_each(all(get_model(field))) do choice %>
+	        <option value="$(choice.id)">$(render_model_field(choice, :name))</option>
+	      <% end %>
+	    </select>
+	  <% else %>
+            <input class="form-control" type="text" id="$(field)" name="$(field)">
+	  <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="mb-2">
+      <button class="btn btn-primary" type="submit">Create</button>
+    </div>
+  </form>
+</div>
+
+
