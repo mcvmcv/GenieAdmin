@@ -1,0 +1,7 @@
+name = "GenieAdmin"
+uuid = "5ab1caf7-77eb-481b-a49b-05e9ce0242e0"
+authors = ["mcvmcv <mcveagh@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+Genie = "c43c736e-a2d1-11e8-161f-af95117fbd1e"
